@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEVA CENTRE</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+    
+    * { font-family: 'Outfit', sans-serif; }
+    
+    body {
+      background: #0a0a0f;
+      color: #e2e8f0;
+      overflow-x: hidden;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+    }
+    @keyframes gradient-x {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .animate-fade-in-up { animation: fadeInUp 0.7s ease forwards; }
+    .animate-fade-in { animation: fadeIn 0.5s ease forwards; }
+    .animate-scale-in { animation: scaleIn 0.5s ease forwards; }
+    .animate-float { animation: float 4s ease-in-out infinite; }
+    .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #818cf8, #c084fc, #f472b6, #818cf8);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-x 6s ease infinite;
+    }
+
+    .card-hover {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .card-hover:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.25);
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.5);
+    }
+
+    .section { display: none; }
+    .section.active { display: block; animation: fadeIn 0.4s ease; }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0a0a0f; }
+    ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 10px; }
+
+    .loader {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #1e1e2e;
+      border-top-color: #818cf8;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .product-card img {
+      transition: transform 0.5s ease;
+    }
+    .product-card:hover img {
+      transform: scale(1.08);
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- Loading Screen -->
+  <div id="loading" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0a0a0f]">
+    <div class="text-center">
+      <div class="loader mx-auto mb-6"></div>
+      <h1 class="text-3xl font-bold gradient-text">DEVA CENTRE</h1>
+      <p class="text-slate-400 mt-2">Yükleniyor...</p>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 z-40 glass">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('home')">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-white">DC</div>
+        <span class="text-xl font-bold gradient-text hidden sm:block">DEVA CENTRE</span>
+      </div>
+      
+      <div class="flex items-center gap-3">
+        <button onclick="showSection('cart')" class="relative p-2.5 rounded-xl glass hover:bg-white/10 transition">
+          <i class="fas fa-shopping-cart text-lg"></i>
+          <span id="cart-badge" class="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 text-white text-xs rounded-full flex items-center justify-center hidden">0</span>
+        </button>
+        <button onclick="showSection('admin')" class="p-2.5 rounded-xl glass hover:bg-white/10 transition">
+          <i class="fas fa-user-shield text-lg"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HOME SECTION -->
+  <section id="home" class="section active pt-24 pb-16 px-4">
+    <div class="max-w-7xl mx-auto">
+      <!-- Hero -->
+      <div class="text-center mb-16 animate-fade-in-up">
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6">
+          <span class="gradient-text">DEVA CENTRE</span>
+        </h1>
+        <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-8">
+          Binlerce ürün, güvenilir mağazalar. Alışverişin yeni adresi.
+        </p>
+        <div class="flex justify-center gap-4">
+          <div class="px-5 py-2 rounded-full glass text-sm">
+            <i class="fas fa-store mr-2 text-indigo-400"></i>
+            <span id="business-count">0</span> Mağaza
+          </div>
+          <div class="px-5 py-2 rounded-full glass text-sm">
+            <i class="fas fa-box mr-2 text-purple-400"></i>
+            <span id="product-count">0</span> Ürün
+          </div>
+        </div>
+      </div>
+
+      <!-- Businesses Grid -->
+      <div id="businesses-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- JS ile dolacak -->
+      </div>
+      
+      <div id="no-business" class="text-center py-20 hidden">
+        <i class="fas fa-store-slash text-6xl text-slate-600 mb-4"></i>
+        <p class="text-slate-400 text-lg">Henüz mağaza eklenmemiş</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORE SECTION -->
+  <section id="store" class="section pt-24 pb-16 px-4">
+    <div class="max-w-7xl mx-auto">
+      <button onclick="showSection('home')" class="mb-8 flex items-center gap-2 text-slate-400 hover:text-white transition">
+        <i class="fas fa-arrow-left"></i> Mağazalara Dön
+      </button>
+      
+      <div id="store-header" class="mb-10 animate-fade-in-up">
+        <!-- JS -->
+      </div>
+
+      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- JS -->
+      </div>
+      
+      <div id="no-product" class="text-center py-20 hidden">
+        <i class="fas fa-box-open text-6xl text-slate-600 mb-4"></i>
+        <p class="text-slate-400 text-lg">Bu mağazada henüz ürün yok</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CART SECTION -->
+  <section id="cart" class="section pt-24 pb-16 px-4">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-3xl font-bold mb-8 animate-fade-in-up">Sepetim</h2>
+      
+      <div id="cart-items" class="space-y-4 mb-8">
+        <!-- JS -->
+      </div>
+      
+      <div id="cart-empty" class="text-center py-16 hidden">
+        <i class="fas fa-shopping-basket text-6xl text-slate-600 mb-4"></i>
+        <p class="text-slate-400 text-lg mb-6">Sepetiniz boş</p>
+        <button onclick="showSection('home')" class="btn-primary px-8 py-3 rounded-xl font-medium">Alışverişe Başla</button>
+      </div>
+
+      <div id="cart-summary" class="glass rounded-2xl p-6 hidden">
+        <div class="flex justify-between text-xl font-semibold mb-6">
+          <span>Toplam</span>
+          <span id="cart-total" class="text-indigo-400">0 ₺</span>
+        </div>
+        
+        <div id="checkout-form" class="space-y-4">
+          <input id="order-name" type="text" placeholder="İsim Soyisim" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-indigo-500 outline-none transition">
+          <textarea id="order-address" rows="3" placeholder="Teslimat Adresi" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-indigo-500 outline-none transition resize-none"></textarea>
+          <button onclick="submitOrder()" class="w-full btn-primary py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-2">
+            <i class="fab fa-whatsapp text-xl"></i> Siparişi Onayla (WhatsApp)
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADMIN SECTION -->
+  <section id="admin" class="section pt-24 pb-16 px-4">
+    <div class="max-w-5xl mx-auto">
+      
+      <!-- Login -->
+      <div id="admin-login" class="max-w-md mx-auto glass rounded-2xl p-8 animate-scale-in">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-lock text-2xl text-white"></i>
+          </div>
+          <h2 class="text-2xl font-bold">Admin Girişi</h2>
+        </div>
+        <input id="admin-password" type="password" placeholder="Şifre" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-indigo-500 outline-none mb-4">
+        <button onclick="adminLogin()" class="w-full btn-primary py-3 rounded-xl font-medium">Giriş Yap</button>
+        <p class="text-center text-slate-500 text-sm mt-4">Şifre: <code class="text-indigo-400">deva2026</code></p>
+      </div>
+
+      <!-- Dashboard -->
+      <div id="admin-dashboard" class="hidden">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-3xl font-bold">Admin Paneli</h2>
+          <button onclick="adminLogout()" class="px-4 py-2 rounded-xl glass hover:bg-white/10 transition text-sm">
+            <i class="fas fa-sign-out-alt mr-2"></i>Çıkış
+          </button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex gap-2 mb-8">
+          <button onclick="showAdminTab('businesses')" id="tab-businesses" class="px-5 py-2.5 rounded-xl bg-indigo-600 font-medium">İşletmeler</button>
+          <button onclick="showAdminTab('products')" id="tab-products" class="px-5 py-2.5 rounded-xl glass font-medium">Ürünler</button>
+        </div>
+
+        <!-- Businesses Tab -->
+        <div id="admin-businesses" class="space-y-6">
+          <div class="glass rounded-2xl p-6">
+            <h3 class="text-xl font-semibold mb-4">Yeni İşletme Ekle</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input id="biz-name" type="text" placeholder="İşletme Adı" class="px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-indigo-500 outline-none">
+              <input id="biz-desc" type="text" placeholder="Kısa Açıklama" class="px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-indigo-500 outline-none">
+            </div>
+            <button onclick="addBusiness()" class="mt-4 btn-primary px-6 py-3 rounded-xl font-medium">
+              <i class="fas fa-plus mr-2"></i>İşletme Ekle
+            </button>
+          </div>
+
+          <div id="admin-business-list" class="space-y-3">
+            <!-- JS -->
+          </div>
+        </div>
+
+        <!-- Products Tab -->
+        <div id="admin-products" class="hidden space-y-6">
+          <div class="glass rounded-2xl p-6">
+            <h3 class="text-xl font-semibold mb-4">Yeni Ürün Ekle</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <select id="product-business" class="px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-indigo-500 outline-none">
+                <option value="">İşletme Seçin</option>
+              </select>
+              <input id="product-name" type="text" placeholder="Ürün Adı" class="px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-indigo-500 outline-none">
+              <input id="product-price" type="number" placeholder="Fiyat (₺)" class="px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-indigo-500 outline-none">
+              <input id="product-image" type="file" accept="image/*" class="px-4 py-3 rounded-xl bg-white/5 border border-white/10 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-indigo-600 file:text-white">
+            </div>
+            <textarea id="product-desc" rows="3" placeholder="Ürün Açıklaması" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-indigo-500 outline-none resize-none mb-4"></textarea>
+            <button onclick="addProduct()" class="btn-primary px-6 py-3 rounded-xl font-medium">
+              <i class="fas fa-plus mr-2"></i>Ürün Ekle
+            </button>
+          </div>
+
+          <div id="admin-product-list" class="space-y-3">
+            <!-- JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden">
+    <div class="glass px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 animate-fade-in-up">
+      <i id="toast-icon" class="fas fa-check-circle text-green-400 text-xl"></i>
+      <span id="toast-message">İşlem başarılı</span>
+    </div>
+  </div>
+
+  <script type="module">
+    // ====================== FIREBASE ======================
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDofUXCUuZ8wh_HaC0ooN9IDnBv7ouGSRg",
+      authDomain: "deva-centre.firebaseapp.com",
+      projectId: "deva-centre",
+      storageBucket: "deva-centre.firebasestorage.app",
+      messagingSenderId: "54798317447",
+      appId: "1:54798317447:web:2f600bb7e62f0782f38522"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // ====================== GLOBALS ======================
+    const IMGBB_API_KEY = "530ae4fc7a3ac2e3ee4572ab198ec6d3";
+    const ADMIN_PASSWORD = "deva2026";
+    const WHATSAPP_NUMBER = "905518329861";
+
+    let businesses = [];
+    let products = [];
+    let currentBusinessId = null;
+    let cart = JSON.parse(localStorage.getItem("deva_cart") || "[]");
+
+    // ====================== UTILS ======================
+    function showToast(message, type = "success") {
+      const toast = document.getElementById("toast");
+      const icon = document.getElementById("toast-icon");
+      const msg = document.getElementById("toast-message");
+      
+      msg.textContent = message;
+      icon.className = type === "success" 
+        ? "fas fa-check-circle text-green-400 text-xl"
+        : "fas fa-exclamation-circle text-rose-400 text-xl";
+      
+      toast.classList.remove("hidden");
+      setTimeout(() => toast.classList.add("hidden"), 3000);
+    }
+
+    function generateProductCode() {
+      return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+
+    function formatPrice(price) {
+      return new Intl.NumberFormat("tr-TR").format(price) + " ₺";
+    }
+
+    function updateCartBadge() {
+      const badge = document.getElementById("cart-badge");
+      const total = cart.reduce((sum, item) => sum + item.qty, 0);
+      if (total > 0) {
+        badge.textContent = total;
+        badge.classList.remove("hidden");
+      } else {
+        badge.classList.add("hidden");
+      }
+    }
+
+    function saveCart() {
+      localStorage.setItem("deva_cart", JSON.stringify(cart));
+      updateCartBadge();
+    }
+
+    // ====================== NAVIGATION ======================
+    window.showSection = function(id) {
+      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      
+      if (id === "cart") renderCart();
+      if (id === "home") loadBusinesses();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    // ====================== LOAD DATA ======================
+    async function loadBusinesses() {
+      try {
+        const snap = await getDocs(collection(db, "businesses"));
+        businesses = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        
+        const grid = document.getElementById("businesses-grid");
+        const noBiz = document.getElementById("no-business");
+        
+        document.getElementById("business-count").textContent = businesses.length;
+        
+        if (businesses.length === 0) {
+          grid.innerHTML = "";
+          noBiz.classList.remove("hidden");
+          return;
+        }
+        
+        noBiz.classList.add("hidden");
+        grid.innerHTML = businesses.map((b, i) => `
+          <div class="card-hover glass rounded-2xl p-6 cursor-pointer animate-fade-in-up" 
+               style="animation-delay: ${i * 0.1}s"
+               onclick="openStore('${b.id}')">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-2xl font-bold mb-4">
+              ${b.name.charAt(0).toUpperCase()}
+            </div>
+            <h3 class="text-xl font-semibold mb-2">${b.name}</h3>
+            <p class="text-slate-400 text-sm line-clamp-2">${b.description || "Açıklama yok"}</p>
+            <div class="mt-4 flex items-center text-indigo-400 text-sm font-medium">
+              Mağazaya Git <i class="fas fa-arrow-right ml-2"></i>
+            </div>
+          </div>
+        `).join("");
+        
+        // Product count
+        const pSnap = await getDocs(collection(db, "products"));
+        document.getElementById("product-count").textContent = pSnap.size;
+        
+      } catch (err) {
+        console.error(err);
+        showToast("Veriler yüklenemedi", "error");
+      }
+    }
+
+    window.openStore = async function(businessId) {
+      currentBusinessId = businessId;
+      const business = businesses.find(b => b.id === businessId);
+      
+      document.getElementById("store-header").innerHTML = `
+        <h1 class="text-4xl font-bold mb-2">${business.name}</h1>
+        <p class="text-slate-400">${business.description || ""}</p>
+      `;
+      
+      // Load products
+      const q = query(collection(db, "products"), where("businessId", "==", businessId));
+      const snap = await getDocs(q);
+      const storeProducts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      
+      const grid = document.getElementById("products-grid");
+      const noProd = document.getElementById("no-product");
+      
+      if (storeProducts.length === 0) {
+        grid.innerHTML = "";
+        noProd.classList.remove("hidden");
+      } else {
+        noProd.classList.add("hidden");
+        grid.innerHTML = storeProducts.map((p, i) => `
+          <div class="product-card glass rounded-2xl overflow-hidden card-hover animate-fade-in-up" style="animation-delay: ${i * 0.08}s">
+            <div class="aspect-square overflow-hidden bg-slate-800">
+              <img src="${p.imageUrl || 'https://via.placeholder.com/400x400?text=Ürün'}" 
+                   alt="${p.name}" class="w-full h-full object-cover">
+            </div>
+            <div class="p-5">
+              <div class="text-xs text-indigo-400 font-mono mb-1">#${p.code}</div>
+              <h3 class="font-semibold text-lg mb-1 line-clamp-1">${p.name}</h3>
+              <p class="text-slate-400 text-sm mb-3 line-clamp-2">${p.description || ""}</p>
+              <div class="flex items-center justify-between">
+                <span class="text-xl font-bold text-indigo-400">${formatPrice(p.price)}</span>
+                <button onclick="addToCart('\( {p.id}', ' \){p.name}', \( {p.price}, ' \){p.imageUrl || ''}', '\( {p.code}', ' \){business.name}')" 
+                        class="btn-primary px-4 py-2 rounded-xl text-sm font-medium">
+                  <i class="fas fa-cart-plus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join("");
+      }
+      
+      showSection("store");
+    };
+
+    // ====================== CART ======================
+    window.addToCart = function(id, name, price, image, code, storeName) {
+      const existing = cart.find(item => item.id === id);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ id, name, price, image, code, storeName, qty: 1 });
+      }
+      saveCart();
+      showToast("Ürün sepete eklendi");
+    };
+
+    function renderCart() {
+      const container = document.getElementById("cart-items");
+      const empty = document.getElementById("cart-empty");
+      const summary = document.getElementById("cart-summary");
+      
+      if (cart.length === 0) {
+        container.innerHTML = "";
+        empty.classList.remove("hidden");
+        summary.classList.add("hidden");
+        return;
+      }
+      
+      empty.classList.add("hidden");
+      summary.classList.remove("hidden");
+      
+      let total = 0;
+      container.innerHTML = cart.map((item, index) => {
+        total += item.price * item.qty;
+        return `
+          <div class="glass rounded-2xl p-4 flex gap-4 items-center animate-fade-in">
+            <img src="${item.image || 'https://via.placeholder.com/80'}" class="w-20 h-20 rounded-xl object-cover bg-slate-800">
+            <div class="flex-1 min-w-0">
+              <div class="text-xs text-slate-500">${item.storeName}</div>
+              <h4 class="font-medium truncate">${item.name}</h4>
+              <div class="text-indigo-400 font-semibold">${formatPrice(item.price)}</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <button onclick="changeQty(${index}, -1)" class="w-8 h-8 rounded-lg glass flex items-center justify-center hover:bg-white/10">-</button>
+              <span class="w-6 text-center font-medium">${item.qty}</span>
+              <button onclick="changeQty(${index}, 1)" class="w-8 h-8 rounded-lg glass flex items-center justify-center hover:bg-white/10">+</button>
+              <button onclick="removeFromCart(${index})" class="w-8 h-8 rounded-lg text-rose-400 hover:bg-rose-500/20 flex items-center justify-center ml-2">
+                <i class="fas fa-trash-alt text-sm"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+      
+      document.getElementById("cart-total").textContent = formatPrice(total);
+    }
+
+    window.changeQty = function(index, delta) {
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) cart.splice(index, 1);
+      saveCart();
+      renderCart();
+    };
+
+    window.removeFromCart = function(index) {
+      cart.splice(index, 1);
+      saveCart();
+      renderCart();
+      showToast("Ürün sepetten silindi");
+    };
+
+    window.submitOrder = function() {
+      const name = document.getElementById("order-name").value.trim();
+      const address = document.getElementById("order-address").value.trim();
+      
+      if (!name || !address) {
+        showToast("İsim ve adres zorunludur", "error");
+        return;
+      }
+      
+      if (cart.length === 0) {
+        showToast("Sepet boş", "error");
+        return;
+      }
+      
+      let message = `🛒 *YENİ SİPARİŞ - DEVA CENTRE*%0A%0A`;
+      message += `👤 *Müşteri:* ${name}%0A`;
+      message += `📍 *Adres:* ${address}%0A%0A`;
+      message += `📦 *Sipariş Detayı:*%0A`;
+      
+      let total = 0;
+      cart.forEach((item, i) => {
+        const lineTotal = item.price * item.qty;
+        total += lineTotal;
+        message += `%0A${i + 1}. ${item.name}%0A`;
+        message += `   Mağaza: ${item.storeName}%0A`;
+        message += `   Kod: #${item.code}%0A`;
+        message += `   ${item.qty} x ${item.price}₺ = ${lineTotal}₺%0A`;
+      });
+      
+      message += `%0A💰 *TOPLAM: ${total}₺*`;
+      
+      const url = `https://wa.me/\( {WHATSAPP_NUMBER}?text= \){message}`;
+      window.open(url, "_blank");
+      
+      // Clear cart
+      cart = [];
+      saveCart();
+      renderCart();
+      showToast("Sipariş WhatsApp'a yönlendirildi!");
+    };
+
+    // ====================== ADMIN ======================
+    window.adminLogin = function() {
+      const pass = document.getElementById("admin-password").value;
+      if (pass === ADMIN_PASSWORD) {
+        document.getElementById("admin-login").classList.add("hidden");
+        document.getElementById("admin-dashboard").classList.remove("hidden");
+        loadAdminData();
+        showToast("Hoş geldin Admin!");
+      } else {
+        showToast("Hatalı şifre", "error");
+      }
+    };
+
+    window.adminLogout = function() {
+      document.getElementById("admin-login").classList.remove("hidden");
+      document.getElementById("admin-dashboard").classList.add("hidden");
+      document.getElementById("admin-password").value = "";
+    };
+
+    window.showAdminTab = function(tab) {
+      document.getElementById("admin-businesses").classList.toggle("hidden", tab !== "businesses");
+      document.getElementById("admin-products").classList.toggle("hidden", tab !== "products");
+      
+      document.getElementById("tab-businesses").className = tab === "businesses" 
+        ? "px-5 py-2.5 rounded-xl bg-indigo-600 font-medium" 
+        : "px-5 py-2.5 rounded-xl glass font-medium";
+      document.getElementById("tab-products").className = tab === "products" 
+        ? "px-5 py-2.5 rounded-xl bg-indigo-600 font-medium" 
+        : "px-5 py-2.5 rounded-xl glass font-medium";
+    };
+
+    async function loadAdminData() {
+      // Businesses
+      const bSnap = await getDocs(collection(db, "businesses"));
+      businesses = bSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      
+      document.getElementById("admin-business-list").innerHTML = businesses.map(b => `
+        <div class="glass rounded-xl p-4 flex items-center justify-between">
+          <div>
+            <div class="font-semibold">${b.name}</div>
+            <div class="text-sm text-slate-400">${b.description || "-"}</div>
+          </div>
+          <button onclick="deleteBusiness('${b.id}')" class="text-rose-400 hover:bg-rose-500/20 p-2 rounded-lg">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      `).join("") || '<p class="text-slate-500">Henüz işletme yok</p>';
+      
+      // Fill select
+      const select = document.getElementById("product-business");
+      select.innerHTML = '<option value="">İşletme Seçin</option>' + 
+        businesses.map(b => `<option value="\( {b.id}"> \){b.name}</option>`).join("");
+      
+      // Products
+      const pSnap = await getDocs(collection(db, "products"));
+      products = pSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      
+      document.getElementById("admin-product-list").innerHTML = products.map(p => {
+        const biz = businesses.find(b => b.id === p.businessId);
+        return `
+          <div class="glass rounded-xl p-4 flex items-center gap-4">
+            <img src="${p.imageUrl || 'https://via.placeholder.com/60'}" class="w-14 h-14 rounded-lg object-cover">
+            <div class="flex-1 min-w-0">
+              <div class="font-semibold truncate">${p.name}</div>
+              <div class="text-sm text-slate-400">\( {biz ? biz.name : "?"} • # \){p.code} • ${formatPrice(p.price)}</div>
+            </div>
+            <button onclick="deleteProduct('${p.id}')" class="text-rose-400 hover:bg-rose-500/20 p-2 rounded-lg">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        `;
+      }).join("") || '<p class="text-slate-500">Henüz ürün yok</p>';
+    }
+
+    window.addBusiness = async function() {
+      const name = document.getElementById("biz-name").value.trim();
+      const description = document.getElementById("biz-desc").value.trim();
+      
+      if (!name) {
+        showToast("İşletme adı gerekli", "error");
+        return;
+      }
+      
+      try {
+        await addDoc(collection(db, "businesses"), {
+          name,
+          description,
+          createdAt: new Date().toISOString()
+        });
+        document.getElementById("biz-name").value = "";
+        document.getElementById("biz-desc").value = "";
+        showToast("İşletme eklendi!");
+        loadAdminData();
+        loadBusinesses();
+      } catch (err) {
+        showToast("Hata oluştu", "error");
+        console.error(err);
+      }
+    };
+
+    window.deleteBusiness = async function(id) {
+      if (!confirm("Bu işletmeyi ve ürünlerini silmek istediğine emin misin?")) return;
+      try {
+        // Delete products first
+        const q = query(collection(db, "products"), where("businessId", "==", id));
+        const snap = await getDocs(q);
+        for (const d of snap.docs) {
+          await deleteDoc(doc(db, "products", d.id));
+        }
+        await deleteDoc(doc(db, "businesses", id));
+        showToast("İşletme silindi");
+        loadAdminData();
+        loadBusinesses();
+      } catch (err) {
+        showToast("Silinemedi", "error");
+      }
+    };
+
+    window.addProduct = async function() {
+      const businessId = document.getElementById("product-business").value;
+      const name = document.getElementById("product-name").value.trim();
+      const price = parseFloat(document.getElementById("product-price").value);
+      const description = document.getElementById("product-desc").value.trim();
+      const fileInput = document.getElementById("product-image");
+      
+      if (!businessId || !name || !price) {
+        showToast("İşletme, isim ve fiyat zorunlu", "error");
+        return;
+      }
+      
+      try {
+        let imageUrl = "";
+        
+        // Upload to ImgBB if file selected
+        if (fileInput.files[0]) {
+          showToast("Görsel yükleniyor...");
+          const formData = new FormData();
+          formData.append("image", fileInput.files[0]);
+          
+          const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+            method: "POST",
+            body: formData
+          });
+          const data = await res.json();
+          if (data.success) {
+            imageUrl = data.data.url;
+          } else {
+            throw new Error("ImgBB yükleme hatası");
+          }
+        }
+        
+        await addDoc(collection(db, "products"), {
+          businessId,
+          name,
+          price,
+          description,
+          imageUrl,
+          code: generateProductCode(),
+          createdAt: new Date().toISOString()
+        });
+        
+        // Clear form
+        document.getElementById("product-name").value = "";
+        document.getElementById("product-price").value = "";
+        document.getElementById("product-desc").value = "";
+        fileInput.value = "";
+        
+        showToast("Ürün başarıyla eklendi!");
+        loadAdminData();
+      } catch (err) {
+        console.error(err);
+        showToast("Ürün eklenemedi", "error");
+      }
+    };
+
+    window.deleteProduct = async function(id) {
+      if (!confirm("Bu ürünü silmek istediğine emin misin?")) return;
+      try {
+        await deleteDoc(doc(db, "products", id));
+        showToast("Ürün silindi");
+        loadAdminData();
+      } catch (err) {
+        showToast("Silinemedi", "error");
+      }
+    };
+
+    // ====================== INIT ======================
+    window.addEventListener("DOMContentLoaded", async () => {
+      updateCartBadge();
+      await loadBusinesses();
+      
+      // Hide loading
+      setTimeout(() => {
+        document.getElementById("loading").style.opacity = "0";
+        document.getElementById("loading").style.transition = "opacity 0.5s";
+        setTimeout(() => {
+          document.getElementById("loading").style.display = "none";
+        }, 500);
+      }, 800);
+    });
+  </script>
+</body>
+</html>
