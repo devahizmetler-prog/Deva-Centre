@@ -34,7 +34,7 @@
             background-color: var(--bg-dark);
             color: var(--text-main);
             min-height: 100vh;
-            padding-bottom: 90px;
+            padding-bottom: 70px;
             overflow-x: hidden;
         }
 
@@ -56,7 +56,7 @@
             100% { transform: scale(1.3) translate(50px, 50px); }
         }
 
-        /* Header Bar - Fully Mobile Responsive */
+        /* Header Bar */
         header {
             position: sticky;
             top: 0;
@@ -78,14 +78,14 @@
         }
 
         .site-logo-img {
-            max-height: 40px;
+            max-height: 36px;
             max-width: 120px;
             object-fit: contain;
             border-radius: 6px;
         }
 
         .logo-text {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 800;
             background: linear-gradient(135deg, #6366f1, #ec4899);
             -webkit-background-clip: text;
@@ -101,8 +101,8 @@
             background: var(--bg-card);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-main);
-            width: 44px;
-            height: 44px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -141,14 +141,14 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 0.8rem;
         }
 
         .search-store-bar {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         @media (min-width: 768px) {
@@ -164,7 +164,7 @@
 
         .input-group i {
             position: absolute;
-            left: 16px;
+            left: 14px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
@@ -174,16 +174,16 @@
             width: 100%;
             background: var(--bg-card);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px 16px 12px 48px;
+            padding: 10px 14px 10px 42px;
             border-radius: 12px;
             color: var(--text-main);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             outline: none;
             transition: border-color 0.3s ease;
         }
 
         .custom-select {
-            padding-left: 16px;
+            padding-left: 14px;
             cursor: pointer;
         }
 
@@ -195,14 +195,14 @@
         /* Product Grid Mobile Adaptive */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
         }
 
         @media (min-width: 600px) {
             .product-grid {
                 grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 20px;
+                gap: 16px;
             }
         }
 
@@ -217,15 +217,23 @@
             flex-direction: column;
             transition: all 0.3s ease;
             position: relative;
-            animation: fadeInUp 0.5s ease forwards;
+            animation: fadeInUp 0.4s ease forwards;
         }
 
+        /* Image Shimmer Loading Effect */
         .card-img-wrapper {
             position: relative;
             width: 100%;
-            height: 140px;
-            background: var(--bg-accent);
+            height: 130px;
+            background: #1e293b linear-gradient(90deg, #1e293b 0%, #334155 50%, #1e293b 100%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
             overflow: hidden;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
 
         @media (min-width: 600px) {
@@ -236,53 +244,61 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.4s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .card-img.loaded {
+            opacity: 1;
         }
 
         .store-tag {
             position: absolute;
-            top: 8px;
-            left: 8px;
+            top: 6px;
+            left: 6px;
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(8px);
-            padding: 3px 8px;
+            padding: 2px 7px;
             border-radius: 20px;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 600;
             color: var(--text-main);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 2;
         }
 
         .code-tag {
             position: absolute;
-            top: 8px;
-            right: 8px;
+            top: 6px;
+            right: 6px;
             background: var(--primary);
             color: white;
             padding: 2px 6px;
             border-radius: 6px;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 700;
+            z-index: 2;
         }
 
         .card-body {
-            padding: 0.8rem;
+            padding: 0.75rem;
             display: flex;
             flex-direction: column;
             flex: 1;
         }
 
         .product-title {
-            font-size: 0.95rem;
+            font-size: 0.88rem;
             font-weight: 700;
             margin-bottom: 4px;
             color: var(--text-main);
+            line-height: 1.2;
         }
 
         .product-desc {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
             line-height: 1.3;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -294,7 +310,7 @@
             margin-top: auto;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         @media (min-width: 480px) {
@@ -306,7 +322,7 @@
         }
 
         .product-price {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 800;
             color: var(--success);
         }
@@ -316,18 +332,18 @@
             background: linear-gradient(135deg, var(--primary), #4f46e5);
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 8px 10px;
             border-radius: 8px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 5px;
         }
 
-        /* Cart Offcanvas Modal */
+        /* Cart Offcanvas Modal - Optimized for Mobile Screens */
         .cart-modal {
             position: fixed;
             top: 0;
@@ -335,10 +351,11 @@
             width: 100%;
             max-width: 420px;
             height: 100vh;
+            height: 100dvh; /* Dynamic Viewport Height for mobile browsers */
             background: var(--bg-dark);
             box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
             z-index: 200;
-            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             flex-direction: column;
         }
@@ -359,51 +376,52 @@
         .cart-overlay.active { opacity: 1; pointer-events: auto; }
 
         .cart-header {
-            padding: 1.2rem;
+            padding: 1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background: var(--bg-card);
         }
 
         .cart-body {
             flex: 1;
             overflow-y: auto;
-            padding: 1rem;
+            padding: 0.8rem;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .cart-item {
             display: flex;
             gap: 10px;
             background: var(--bg-card);
-            padding: 10px;
-            border-radius: 12px;
+            padding: 8px 10px;
+            border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             align-items: center;
         }
 
         .cart-item img {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             border-radius: 8px;
             object-fit: cover;
         }
 
         .cart-item-details { flex: 1; }
-        .cart-item-title { font-weight: 600; font-size: 0.85rem; margin-bottom: 2px; }
-        .cart-item-code { font-size: 0.7rem; color: var(--text-muted); }
-        .cart-item-price { font-weight: 700; color: var(--success); font-size: 0.85rem; margin-top: 2px; }
+        .cart-item-title { font-weight: 600; font-size: 0.82rem; margin-bottom: 2px; }
+        .cart-item-code { font-size: 0.68rem; color: var(--text-muted); }
+        .cart-item-price { font-weight: 700; color: var(--success); font-size: 0.82rem; margin-top: 2px; }
 
         .qty-controls {
             display: flex;
             align-items: center;
             gap: 6px;
             background: var(--bg-accent);
-            padding: 4px 8px;
-            border-radius: 8px;
+            padding: 3px 6px;
+            border-radius: 6px;
         }
 
         .qty-btn {
@@ -415,28 +433,31 @@
             width: 18px;
         }
 
+        /* Compact Cart Footer for Mobile */
         .cart-footer {
-            padding: 1.2rem;
+            padding: 0.8rem 1rem 1.2rem 1rem;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             background: var(--bg-card);
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
         }
 
         .checkout-form {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 6px;
+            margin-bottom: 10px;
         }
 
         .checkout-form input, .checkout-form textarea {
             width: 100%;
             background: var(--bg-dark);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 8px 10px;
             border-radius: 8px;
             color: white;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             outline: none;
+            resize: none;
         }
 
         .btn-whatsapp {
@@ -445,15 +466,18 @@
             color: white;
             border: none;
             padding: 12px;
-            border-radius: 12px;
+            border-radius: 10px;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
         }
+
+        .btn-whatsapp:active { transform: scale(0.98); }
 
         /* Admin Section Modal */
         .admin-modal {
@@ -473,7 +497,7 @@
             max-width: 600px;
             margin: 0 auto;
             background: var(--bg-card);
-            padding: 1.5rem;
+            padding: 1.2rem;
             border-radius: var(--radius);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -482,20 +506,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
         }
 
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
+        .form-group { margin-bottom: 0.8rem; }
+        .form-group label { display: block; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px; }
 
         .btn-primary {
             width: 100%;
             background: var(--primary);
             color: white;
             border: none;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 10px;
+            border-radius: 8px;
             font-weight: 700;
+            font-size: 0.85rem;
             cursor: pointer;
         }
 
@@ -509,7 +534,7 @@
         }
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -535,7 +560,7 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" id="searchInput" class="custom-input" placeholder="Ürün adı veya 6 haneli kod..." oninput="filterProducts()">
             </div>
-            <div style="min-width: 180px;">
+            <div style="min-width: 160px;">
                 <select id="storeFilter" class="custom-select" onchange="filterProducts()">
                     <option value="ALL">Tüm Mağazalar</option>
                 </select>
@@ -545,7 +570,7 @@
         <div class="product-grid" id="productGrid">
             <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
                 <div class="spinner"></div>
-                <p style="margin-top: 10px; color: var(--text-muted);">Ürünler yükleniyor...</p>
+                <p style="margin-top: 10px; color: var(--text-muted); font-size: 0.85rem;">Ürünler yükleniyor...</p>
             </div>
         </div>
     </div>
@@ -553,16 +578,16 @@
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCart(false)"></div>
     <div class="cart-modal" id="cartModal">
         <div class="cart-header">
-            <h3 style="display: flex; align-items: center; gap: 8px;">
+            <h3 style="display: flex; align-items: center; gap: 8px; font-size: 1.05rem;">
                 <i class="fa-solid fa-bag-shopping" style="color: var(--primary);"></i> Sepetim
             </h3>
             <i class="fa-solid fa-xmark" style="cursor: pointer; font-size: 1.2rem;" onclick="toggleCart(false)"></i>
         </div>
         <div class="cart-body" id="cartItemsContainer"></div>
         <div class="cart-footer">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 700;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 700; font-size: 0.95rem;">
                 <span>Toplam Tutar:</span>
-                <span id="cartTotal" style="color: var(--success); font-size: 1.1rem;">0.00 TL</span>
+                <span id="cartTotal" style="color: var(--success);">0.00 TL</span>
             </div>
             <div class="checkout-form">
                 <input type="text" id="custName" placeholder="Ad Soyadınız">
@@ -581,46 +606,46 @@
                 <i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="closeAdmin()"></i>
             </div>
             
-            <div style="background: var(--bg-dark); padding: 1rem; border-radius: 12px; margin-bottom: 1.2rem;">
-                <h4 style="margin-bottom: 8px; font-size: 0.9rem;">Site Logosu Değiştir</h4>
+            <div style="background: var(--bg-dark); padding: 0.9rem; border-radius: 12px; margin-bottom: 1rem;">
+                <h4 style="margin-bottom: 6px; font-size: 0.85rem;">Site Logosu Değiştir</h4>
                 <div class="form-group" style="margin-bottom: 8px;">
-                    <input type="file" id="logoFileInput" class="custom-input" style="padding-left: 12px;" accept="image/*">
+                    <input type="file" id="logoFileInput" class="custom-input" style="padding-left: 10px;" accept="image/*">
                 </div>
                 <div style="display: flex; gap: 8px;">
-                    <button class="btn-primary" id="btnSaveLogo" onclick="uploadSiteLogo()" style="font-size: 0.85rem; padding: 8px;">Logo Yükle</button>
-                    <button class="btn-primary" onclick="removeSiteLogo()" style="background: var(--danger); font-size: 0.85rem; padding: 8px;">Varsayılana Dön</button>
+                    <button class="btn-primary" id="btnSaveLogo" onclick="uploadSiteLogo()" style="padding: 8px;">Logo Yükle</button>
+                    <button class="btn-primary" onclick="removeSiteLogo()" style="background: var(--danger); padding: 8px;">Varsayılana Dön</button>
                 </div>
             </div>
 
-            <div style="background: var(--bg-dark); padding: 1rem; border-radius: 12px; margin-bottom: 1.2rem;">
-                <h4 style="margin-bottom: 8px; font-size: 0.9rem;">Mağaza Ekle</h4>
+            <div style="background: var(--bg-dark); padding: 0.9rem; border-radius: 12px; margin-bottom: 1rem;">
+                <h4 style="margin-bottom: 6px; font-size: 0.85rem;">Mağaza Ekle</h4>
                 <div style="display: flex; gap: 8px;">
-                    <input type="text" id="newStoreName" class="custom-input" style="padding-left: 12px;" placeholder="Mağaza Adı">
+                    <input type="text" id="newStoreName" class="custom-input" style="padding-left: 10px;" placeholder="Mağaza Adı">
                     <button class="btn-primary" style="width: auto; padding: 0 15px;" onclick="addStore()">Ekle</button>
                 </div>
             </div>
 
             <div>
-                <h4 style="margin-bottom: 8px; font-size: 0.9rem;">Yeni Ürün Ekle</h4>
+                <h4 style="margin-bottom: 6px; font-size: 0.85rem;">Yeni Ürün Ekle</h4>
                 <div class="form-group">
                     <label>Mağaza Seç</label>
-                    <select id="adminStoreSelect" class="custom-select" style="padding-left: 12px;"></select>
+                    <select id="adminStoreSelect" class="custom-select" style="padding-left: 10px;"></select>
                 </div>
                 <div class="form-group">
                     <label>Ürün Adı</label>
-                    <input type="text" id="pName" class="custom-input" style="padding-left: 12px;">
+                    <input type="text" id="pName" class="custom-input" style="padding-left: 10px;">
                 </div>
                 <div class="form-group">
                     <label>Fiyat (TL)</label>
-                    <input type="number" id="pPrice" class="custom-input" style="padding-left: 12px;">
+                    <input type="number" id="pPrice" class="custom-input" style="padding-left: 10px;">
                 </div>
                 <div class="form-group">
                     <label>Açıklama</label>
-                    <input type="text" id="pDesc" class="custom-input" style="padding-left: 12px;">
+                    <input type="text" id="pDesc" class="custom-input" style="padding-left: 10px;">
                 </div>
                 <div class="form-group">
                     <label>Ürün Görseli</label>
-                    <input type="file" id="pImg" class="custom-input" style="padding-left: 12px;" accept="image/*">
+                    <input type="file" id="pImg" class="custom-input" style="padding-left: 10px;" accept="image/*">
                 </div>
                 <button class="btn-primary" id="btnSaveProduct" onclick="saveProduct()">
                     <i class="fa-solid fa-plus"></i> Ürünü Kaydet
@@ -633,7 +658,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, push, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Corrected Firebase Config with DatabaseURL
         const firebaseConfig = {
             apiKey: "AIzaSyDofUXCUuZ8wh_HaC0ooN9IDnBv7ouGSRg",
             authDomain: "deva-centre.firebaseapp.com",
@@ -721,7 +745,6 @@
             });
         }
 
-        // Upload Custom Logo to ImgBB & Save to Firebase
         window.uploadSiteLogo = async () => {
             const fileInput = document.getElementById('logoFileInput');
             if (!fileInput.files[0]) return alert("Lütfen bir logo görseli seçin!");
@@ -741,7 +764,9 @@
                 const resData = await response.json();
 
                 if (resData.success) {
-                    await set(ref(db, 'settings/logoUrl'), resData.data.url);
+                    // Medium/Display URL for fast loading
+                    const fastUrl = resData.data.display_url || resData.data.url;
+                    await set(ref(db, 'settings/logoUrl'), fastUrl);
                     alert("Site logosu başarıyla güncellendi!");
                     fileInput.value = "";
                 } else {
@@ -813,13 +838,16 @@
 
                 if (resData.success) {
                     const code = generate6DigitCode();
+                    // Store display_url for ultra fast mobile rendering
+                    const fastImgUrl = resData.data.display_url || resData.data.url;
+
                     await push(ref(db, 'products'), {
                         code,
                         store,
                         title,
                         price,
                         desc,
-                        imgUrl: resData.data.url,
+                        imgUrl: fastImgUrl,
                         createdAt: Date.now()
                     });
 
@@ -843,7 +871,7 @@
         function renderProducts(products) {
             const container = document.getElementById('productGrid');
             if (products.length === 0) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">Henüz ürün bulunmuyor.</div>`;
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem; font-size: 0.85rem;">Henüz ürün bulunmuyor.</div>`;
                 return;
             }
 
@@ -852,7 +880,7 @@
                     <div class="card-img-wrapper">
                         <span class="store-tag"><i class="fa-solid fa-shop"></i> ${p.store}</span>
                         <span class="code-tag">#${p.code}</span>
-                        <img src="${p.imgUrl}" class="card-img" alt="${p.title}" loading="lazy">
+                        <img src="${p.imgUrl}" class="card-img" alt="${p.title}" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
                     </div>
                     <div class="card-body">
                         <div class="product-title">${p.title}</div>
@@ -910,7 +938,7 @@
 
             const container = document.getElementById('cartItemsContainer');
             if (cart.length === 0) {
-                container.innerHTML = `<div style="text-align: center; color: var(--text-muted); margin-top: 2rem;">Sepetiniz boş.</div>`;
+                container.innerHTML = `<div style="text-align: center; color: var(--text-muted); margin-top: 2rem; font-size: 0.85rem;">Sepetiniz boş.</div>`;
                 document.getElementById('cartTotal').innerText = "0.00 TL";
                 return;
             }
@@ -921,7 +949,7 @@
                 totalPrice += itemTotal;
                 return `
                     <div class="cart-item">
-                        <img src="${item.imgUrl}" alt="${item.title}">
+                        <img src="${item.imgUrl}" alt="${item.title}" loading="lazy">
                         <div class="cart-item-details">
                             <div class="cart-item-title">${item.title}</div>
                             <div class="cart-item-code">${item.store} | Kod: #${item.code}</div>
