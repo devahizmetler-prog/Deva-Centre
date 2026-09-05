@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DEVA CENTRE - Dijital Pazaryeri</title>
+    
+    <!-- Ana Ekran Kısayol Simgesi ve Favicon -->
+    <link rel="icon" type="image/png" href="https://i.ibb.co/WNGP3NCB/logo.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/WNGP3NCB/logo.png">
+    <link rel="shortcut icon" href="https://i.ibb.co/WNGP3NCB/logo.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -237,6 +243,7 @@
         </div>
     </div>
 
+    <!-- Product Detail Modal (Trendyol Style) -->
     <div class="detail-modal" id="detailModal">
         <div class="detail-card">
             <div class="detail-header">
@@ -255,6 +262,7 @@
         </div>
     </div>
 
+    <!-- Cart Modal -->
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCart(false)"></div>
     <div class="cart-modal" id="cartModal">
         <div class="cart-header">
@@ -274,6 +282,7 @@
         </div>
     </div>
 
+    <!-- Admin Panel Modal -->
     <div class="admin-modal" id="adminModal">
         <div class="admin-container">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
@@ -281,6 +290,7 @@
                 <i class="fa-solid fa-xmark" style="cursor:pointer; font-size:1.2rem;" onclick="closeAdmin()"></i>
             </div>
 
+            <!-- Site Header / Name Config -->
             <div style="background: var(--bg-dark); padding: 0.9rem; border-radius: 12px; margin-bottom: 1rem;">
                 <h4 style="font-size:0.85rem; margin-bottom:6px;">Site İsmini Değiştir</h4>
                 <div style="display:flex; gap:8px;">
@@ -289,6 +299,7 @@
                 </div>
             </div>
 
+            <!-- Logo Config Section -->
             <div style="background: var(--bg-dark); padding: 0.9rem; border-radius: 12px; margin-bottom: 1rem;">
                 <h4 style="font-size:0.85rem; margin-bottom:6px;">Site Logosu Yükle</h4>
                 <div class="form-group" style="margin-bottom: 8px;">
@@ -300,6 +311,7 @@
                 </div>
             </div>
 
+            <!-- Store Section -->
             <div style="background: var(--bg-dark); padding: 0.9rem; border-radius: 12px; margin-bottom: 1rem;">
                 <h4 style="font-size:0.85rem; margin-bottom:6px;">Mağaza Ekle</h4>
                 <div style="display:flex; gap:8px;">
@@ -308,6 +320,7 @@
                 </div>
             </div>
 
+            <!-- Product Section -->
             <div>
                 <h4 style="font-size:0.85rem; margin-bottom:6px;">Yeni Ürün Ekle (Çoklu Görsel)</h4>
                 <div class="form-group"><label>Mağaza Seç</label><select id="adminStoreSelect" class="custom-select" style="padding-left:10px;"></select></div>
@@ -323,6 +336,7 @@
         </div>
     </div>
 
+    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, push, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -347,7 +361,7 @@
         let allStores = [];
         let cart = [];
 
-        const ADMIN_PASS = "???";
+        const ADMIN_PASS = "bok bulursun ben malmıyım kodun içerisine yazayım şifreyi";
 
         window.addEventListener('hashchange', checkHash);
         window.addEventListener('load', () => { checkHash(); initDataListeners(); });
