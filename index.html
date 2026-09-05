@@ -38,7 +38,6 @@
             overflow-x: hidden;
         }
 
-        /* Ambient Background Glow */
         .glow-bg {
             position: fixed;
             top: -100px;
@@ -48,15 +47,8 @@
             background: radial-gradient(circle, var(--primary-glow) 0%, rgba(0,0,0,0) 70%);
             border-radius: 50%;
             z-index: -1;
-            animation: pulseGlow 8s infinite alternate;
         }
 
-        @keyframes pulseGlow {
-            0% { transform: scale(1) translate(0, 0); }
-            100% { transform: scale(1.3) translate(50px, 50px); }
-        }
-
-        /* Header Bar */
         header {
             position: sticky;
             top: 0;
@@ -70,471 +62,143 @@
             justify-content: space-between;
         }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-
-        .site-logo-img {
-            max-height: 36px;
-            max-width: 120px;
-            object-fit: contain;
-            border-radius: 6px;
-        }
-
-        .logo-text {
-            font-size: 1.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #6366f1, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            letter-spacing: -0.5px;
-        }
+        .logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .site-logo-img { max-height: 36px; max-width: 120px; object-fit: contain; border-radius: 6px; }
+        .logo-text { font-size: 1.2rem; font-weight: 800; background: linear-gradient(135deg, #6366f1, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 6px; }
 
         .cart-icon-btn {
             position: relative;
             background: var(--bg-card);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-main);
-            width: 42px;
-            height: 42px;
+            width: 42px; height: 42px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
-
-        .cart-icon-btn:active { transform: scale(0.9); }
 
         .cart-badge {
             position: absolute;
-            top: -4px;
-            right: -4px;
+            top: -4px; right: -4px;
             background: var(--secondary);
             color: white;
-            font-size: 0.75rem;
-            font-weight: 700;
-            width: 20px;
-            height: 20px;
+            font-size: 0.75rem; font-weight: 700;
+            width: 20px; height: 20px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             border: 2px solid var(--bg-dark);
-            animation: popIn 0.3s ease;
         }
 
-        @keyframes popIn {
-            0% { transform: scale(0); }
-            80% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0.8rem; }
+        .search-store-bar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.2rem; }
+        @media (min-width: 768px) { .search-store-bar { flex-direction: row; } }
 
-        /* Container & Controls */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0.8rem;
-        }
-
-        .search-store-bar {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 1.2rem;
-        }
-
-        @media (min-width: 768px) {
-            .search-store-bar { flex-direction: row; }
-            .container { padding: 1.5rem; }
-            .logo-text { font-size: 1.5rem; }
-        }
-
-        .input-group {
-            position: relative;
-            flex: 1;
-        }
-
-        .input-group i {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-        }
-
+        .input-group { position: relative; flex: 1; }
+        .input-group i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
         .custom-input, .custom-select {
-            width: 100%;
-            background: var(--bg-card);
+            width: 100%; background: var(--bg-card);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 14px 10px 42px;
-            border-radius: 12px;
-            color: var(--text-main);
-            font-size: 0.9rem;
-            outline: none;
-            transition: border-color 0.3s ease;
+            padding: 10px 14px 10px 42px; border-radius: 12px;
+            color: var(--text-main); font-size: 0.9rem; outline: none;
         }
+        .custom-select { padding-left: 14px; cursor: pointer; }
 
-        .custom-select {
-            padding-left: 14px;
-            cursor: pointer;
-        }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+        @media (min-width: 600px) { .product-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; } }
 
-        .custom-input:focus, .custom-select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-glow);
-        }
-
-        /* Product Grid Mobile Adaptive */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 10px;
-        }
-
-        @media (min-width: 600px) {
-            .product-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 16px;
-            }
-        }
-
-        /* Glassmorphism Product Card */
         .product-card {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: var(--radius);
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.3s ease;
-            position: relative;
-            animation: fadeInUp 0.4s ease forwards;
+            display: flex; flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.2s ease;
         }
+        .product-card:active { transform: scale(0.98); }
 
-        /* Image Shimmer Loading Effect */
         .card-img-wrapper {
-            position: relative;
-            width: 100%;
-            height: 130px;
-            background: #1e293b linear-gradient(90deg, #1e293b 0%, #334155 50%, #1e293b 100%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            overflow: hidden;
+            position: relative; width: 100%; height: 140px;
+            background: #1e293b; overflow: hidden;
         }
+        @media (min-width: 600px) { .card-img-wrapper { height: 180px; } }
+        .card-img { width: 100%; height: 100%; object-fit: cover; }
 
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
+        .store-tag { position: absolute; top: 6px; left: 6px; background: rgba(15, 23, 42, 0.85); padding: 2px 7px; border-radius: 20px; font-size: 0.6rem; font-weight: 600; }
+        .code-tag { position: absolute; top: 6px; right: 6px; background: var(--primary); color: white; padding: 2px 6px; border-radius: 6px; font-size: 0.6rem; font-weight: 700; }
 
-        @media (min-width: 600px) {
-            .card-img-wrapper { height: 180px; }
-        }
+        .card-body { padding: 0.75rem; display: flex; flex-direction: column; flex: 1; }
+        .product-title { font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; }
+        .product-desc { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.6rem; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease, opacity 0.3s ease;
-            opacity: 0;
-        }
-
-        .card-img.loaded {
-            opacity: 1;
-        }
-
-        .store-tag {
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(8px);
-            padding: 2px 7px;
-            border-radius: 20px;
-            font-size: 0.6rem;
-            font-weight: 600;
-            color: var(--text-main);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 2;
-        }
-
-        .code-tag {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            background: var(--primary);
-            color: white;
-            padding: 2px 6px;
-            border-radius: 6px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            z-index: 2;
-        }
-
-        .card-body {
-            padding: 0.75rem;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-
-        .product-title {
-            font-size: 0.88rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-            color: var(--text-main);
-            line-height: 1.2;
-        }
-
-        .product-desc {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            margin-bottom: 0.6rem;
-            line-height: 1.3;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .card-footer {
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        @media (min-width: 480px) {
-            .card-footer {
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-            }
-        }
-
-        .product-price {
-            font-size: 1rem;
-            font-weight: 800;
-            color: var(--success);
-        }
+        .card-footer { margin-top: auto; display: flex; flex-direction: column; gap: 6px; }
+        @media (min-width: 480px) { .card-footer { flex-direction: row; align-items: center; justify-content: space-between; } }
+        .product-price { font-size: 1rem; font-weight: 800; color: var(--success); }
 
         .btn-add-cart {
-            width: 100%;
-            background: linear-gradient(135deg, var(--primary), #4f46e5);
-            color: white;
-            border: none;
-            padding: 8px 10px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
+            width: 100%; background: linear-gradient(135deg, var(--primary), #4f46e5);
+            color: white; border: none; padding: 8px 10px; border-radius: 8px;
+            font-weight: 600; font-size: 0.8rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 5px;
         }
 
-        /* Cart Offcanvas Modal - Optimized for Mobile Screens */
+        /* Trendyol Style Product Detail Modal */
+        .detail-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px);
+            z-index: 250; display: none; overflow-y: auto; padding: 1rem;
+        }
+        .detail-modal.active { display: block; }
+        .detail-card {
+            max-width: 550px; margin: 10px auto; background: var(--bg-card);
+            border-radius: var(--radius); border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden; position: relative;
+        }
+        .detail-header { padding: 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .main-img-view { width: 100%; height: 260px; object-fit: cover; background: var(--bg-accent); }
+        .thumbs-wrapper { display: flex; gap: 8px; padding: 10px; overflow-x: auto; background: var(--bg-dark); }
+        .thumb-img { width: 55px; height: 55px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; opacity: 0.6; }
+        .thumb-img.active { border-color: var(--primary); opacity: 1; }
+
+        .detail-content { padding: 1rem; }
+        .detail-price { font-size: 1.4rem; font-weight: 800; color: var(--success); margin: 8px 0; }
+        .detail-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem; }
+
+        /* Cart Offcanvas Modal */
         .cart-modal {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 100%;
-            max-width: 420px;
-            height: 100vh;
-            height: 100dvh; /* Dynamic Viewport Height for mobile browsers */
-            background: var(--bg-dark);
-            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
-            z-index: 200;
-            transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
-            flex-direction: column;
+            position: fixed; top: 0; right: -100%; width: 100%; max-width: 420px;
+            height: 100dvh; background: var(--bg-dark);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 200;
+            transition: right 0.35s ease; display: flex; flex-direction: column;
         }
-
         .cart-modal.active { right: 0; }
-
-        .cart-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            z-index: 199;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 199; opacity: 0; pointer-events: none; }
         .cart-overlay.active { opacity: 1; pointer-events: auto; }
-
-        .cart-header {
-            padding: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--bg-card);
-        }
-
-        .cart-body {
-            flex: 1;
-            overflow-y: auto;
-            padding: 0.8rem;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .cart-item {
-            display: flex;
-            gap: 10px;
-            background: var(--bg-card);
-            padding: 8px 10px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            align-items: center;
-        }
-
-        .cart-item img {
-            width: 48px;
-            height: 48px;
-            border-radius: 8px;
-            object-fit: cover;
-        }
-
+        .cart-header { padding: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; background: var(--bg-card); }
+        .cart-body { flex: 1; overflow-y: auto; padding: 0.8rem; display: flex; flex-direction: column; gap: 10px; }
+        .cart-item { display: flex; gap: 10px; background: var(--bg-card); padding: 8px 10px; border-radius: 10px; align-items: center; }
+        .cart-item img { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; }
         .cart-item-details { flex: 1; }
-        .cart-item-title { font-weight: 600; font-size: 0.82rem; margin-bottom: 2px; }
-        .cart-item-code { font-size: 0.68rem; color: var(--text-muted); }
-        .cart-item-price { font-weight: 700; color: var(--success); font-size: 0.82rem; margin-top: 2px; }
+        .qty-controls { display: flex; gap: 6px; background: var(--bg-accent); padding: 3px 6px; border-radius: 6px; }
+        .qty-btn { background: none; border: none; color: white; cursor: pointer; width: 18px; }
 
-        .qty-controls {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--bg-accent);
-            padding: 3px 6px;
-            border-radius: 6px;
-        }
+        .cart-footer { padding: 0.8rem 1rem 1.2rem 1rem; border-top: 1px solid rgba(255, 255, 255, 0.08); background: var(--bg-card); }
+        .checkout-form { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+        .checkout-form input, .checkout-form textarea { width: 100%; background: var(--bg-dark); border: 1px solid rgba(255, 255, 255, 0.12); padding: 8px 10px; border-radius: 8px; color: white; font-size: 0.82rem; outline: none; }
 
-        .qty-btn {
-            background: none;
-            border: none;
-            color: var(--text-main);
-            cursor: pointer;
-            font-size: 0.85rem;
-            width: 18px;
-        }
+        .btn-whatsapp { width: 100%; background: #25D366; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 0.92rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-        /* Compact Cart Footer for Mobile */
-        .cart-footer {
-            padding: 0.8rem 1rem 1.2rem 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            background: var(--bg-card);
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
-        }
-
-        .checkout-form {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-bottom: 10px;
-        }
-
-        .checkout-form input, .checkout-form textarea {
-            width: 100%;
-            background: var(--bg-dark);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 8px 10px;
-            border-radius: 8px;
-            color: white;
-            font-size: 0.82rem;
-            outline: none;
-            resize: none;
-        }
-
-        .btn-whatsapp {
-            width: 100%;
-            background: #25D366;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.92rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
-        }
-
-        .btn-whatsapp:active { transform: scale(0.98); }
-
-        /* Admin Section Modal */
-        .admin-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(15px);
-            z-index: 300;
-            display: none;
-            overflow-y: auto;
-            padding: 1rem;
-        }
-
+        /* Admin Modal */
+        .admin-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); z-index: 300; display: none; overflow-y: auto; padding: 1rem; }
         .admin-modal.active { display: block; }
-
-        .admin-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: var(--bg-card);
-            padding: 1.2rem;
-            border-radius: var(--radius);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
+        .admin-container { max-width: 600px; margin: 0 auto; background: var(--bg-card); padding: 1.2rem; border-radius: var(--radius); }
         .form-group { margin-bottom: 0.8rem; }
         .form-group label { display: block; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px; }
-
-        .btn-primary {
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            cursor: pointer;
-        }
-
-        .spinner {
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            width: 20px; height: 20px;
-            border-radius: 50%;
-            border-left-color: var(--primary);
-            animation: spin 1s linear infinite;
-            display: inline-block;
-        }
-
+        .btn-primary { width: 100%; background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
+        
+        .spinner { border: 3px solid rgba(255, 255, 255, 0.1); width: 20px; height: 20px; border-radius: 50%; border-left-color: var(--primary); animation: spin 1s linear infinite; display: inline-block; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -544,9 +208,7 @@
     <header>
         <div class="logo-container">
             <img id="siteLogoImg" class="site-logo-img" src="" alt="" style="display: none;">
-            <div class="logo-text" id="siteLogoText">
-                <i class="fa-solid fa-store"></i> DEVA CENTRE
-            </div>
+            <div class="logo-text" id="siteLogoText"><i class="fa-solid fa-store"></i> DEVA CENTRE</div>
         </div>
         <button class="cart-icon-btn" onclick="toggleCart(true)">
             <i class="fa-solid fa-cart-shopping"></i>
@@ -575,88 +237,75 @@
         </div>
     </div>
 
+    <div class="detail-modal" id="detailModal">
+        <div class="detail-card">
+            <div class="detail-header">
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);" id="detailStore"></span>
+                <i class="fa-solid fa-xmark" style="cursor: pointer; font-size: 1.2rem;" onclick="closeDetail()"></i>
+            </div>
+            <img id="mainDetailImg" class="main-img-view" src="" alt="">
+            <div class="thumbs-wrapper" id="thumbsContainer"></div>
+            <div class="detail-content">
+                <h3 id="detailTitle" style="font-size: 1.1rem; margin-bottom: 4px;"></h3>
+                <div style="font-size: 0.75rem; color: var(--primary); font-weight: 700;" id="detailCode"></div>
+                <div class="detail-price" id="detailPrice"></div>
+                <div class="detail-desc" id="detailDesc"></div>
+                <button class="btn-primary" id="btnDetailCartAdd"><i class="fa-solid fa-cart-plus"></i> Sepete Ekle</button>
+            </div>
+        </div>
+    </div>
+
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCart(false)"></div>
     <div class="cart-modal" id="cartModal">
         <div class="cart-header">
-            <h3 style="display: flex; align-items: center; gap: 8px; font-size: 1.05rem;">
-                <i class="fa-solid fa-bag-shopping" style="color: var(--primary);"></i> Sepetim
-            </h3>
-            <i class="fa-solid fa-xmark" style="cursor: pointer; font-size: 1.2rem;" onclick="toggleCart(false)"></i>
+            <h3 style="display: flex; align-items: center; gap: 8px; font-size: 1.05rem;"><i class="fa-solid fa-bag-shopping" style="color: var(--primary);"></i> Sepetim</h3>
+            <i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="toggleCart(false)"></i>
         </div>
         <div class="cart-body" id="cartItemsContainer"></div>
         <div class="cart-footer">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 700; font-size: 0.95rem;">
-                <span>Toplam Tutar:</span>
-                <span id="cartTotal" style="color: var(--success);">0.00 TL</span>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 700;">
+                <span>Toplam:</span><span id="cartTotal" style="color: var(--success);">0.00 TL</span>
             </div>
             <div class="checkout-form">
                 <input type="text" id="custName" placeholder="Ad Soyadınız">
                 <textarea id="custAddress" rows="2" placeholder="Teslimat Adresiniz"></textarea>
             </div>
-            <button class="btn-whatsapp" onclick="checkoutWhatsApp()">
-                <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Siparişi Onayla
-            </button>
+            <button class="btn-whatsapp" onclick="checkoutWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Siparişi Onayla</button>
         </div>
     </div>
 
     <div class="admin-modal" id="adminModal">
         <div class="admin-container">
-            <div class="admin-header">
-                <h3><i class="fa-solid fa-user-shield" style="color: var(--secondary);"></i> Admin Paneli</h3>
-                <i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="closeAdmin()"></i>
-            </div>
-            
-            <div style="background: var(--bg-dark); padding: 0.9rem; border-radius: 12px; margin-bottom: 1rem;">
-                <h4 style="margin-bottom: 6px; font-size: 0.85rem;">Site Logosu Değiştir</h4>
-                <div class="form-group" style="margin-bottom: 8px;">
-                    <input type="file" id="logoFileInput" class="custom-input" style="padding-left: 10px;" accept="image/*">
-                </div>
-                <div style="display: flex; gap: 8px;">
-                    <button class="btn-primary" id="btnSaveLogo" onclick="uploadSiteLogo()" style="padding: 8px;">Logo Yükle</button>
-                    <button class="btn-primary" onclick="removeSiteLogo()" style="background: var(--danger); padding: 8px;">Varsayılana Dön</button>
-                </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+                <h3>Admin Paneli</h3><i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="closeAdmin()"></i>
             </div>
 
             <div style="background: var(--bg-dark); padding: 0.9rem; border-radius: 12px; margin-bottom: 1rem;">
-                <h4 style="margin-bottom: 6px; font-size: 0.85rem;">Mağaza Ekle</h4>
-                <div style="display: flex; gap: 8px;">
-                    <input type="text" id="newStoreName" class="custom-input" style="padding-left: 10px;" placeholder="Mağaza Adı">
-                    <button class="btn-primary" style="width: auto; padding: 0 15px;" onclick="addStore()">Ekle</button>
+                <h4 style="font-size:0.85rem; margin-bottom:6px;">Mağaza Ekle</h4>
+                <div style="display:flex; gap:8px;">
+                    <input type="text" id="newStoreName" class="custom-input" style="padding-left:10px;" placeholder="Mağaza Adı">
+                    <button class="btn-primary" style="width:auto;" onclick="addStore()">Ekle</button>
                 </div>
             </div>
 
             <div>
-                <h4 style="margin-bottom: 6px; font-size: 0.85rem;">Yeni Ürün Ekle</h4>
+                <h4 style="font-size:0.85rem; margin-bottom:6px;">Yeni Ürün Ekle (Çoklu Görsel)</h4>
+                <div class="form-group"><label>Mağaza Seç</label><select id="adminStoreSelect" class="custom-select" style="padding-left:10px;"></select></div>
+                <div class="form-group"><label>Ürün Adı</label><input type="text" id="pName" class="custom-input" style="padding-left:10px;"></div>
+                <div class="form-group"><label>Fiyat (TL)</label><input type="number" id="pPrice" class="custom-input" style="padding-left:10px;"></div>
+                <div class="form-group"><label>Açıklama</label><input type="text" id="pDesc" class="custom-input" style="padding-left:10px;"></div>
                 <div class="form-group">
-                    <label>Mağaza Seç</label>
-                    <select id="adminStoreSelect" class="custom-select" style="padding-left: 10px;"></select>
+                    <label>Ürün Görselleri (Birden fazla seçebilirsiniz)</label>
+                    <input type="file" id="pImg" class="custom-input" style="padding-left:10px;" accept="image/*" multiple>
                 </div>
-                <div class="form-group">
-                    <label>Ürün Adı</label>
-                    <input type="text" id="pName" class="custom-input" style="padding-left: 10px;">
-                </div>
-                <div class="form-group">
-                    <label>Fiyat (TL)</label>
-                    <input type="number" id="pPrice" class="custom-input" style="padding-left: 10px;">
-                </div>
-                <div class="form-group">
-                    <label>Açıklama</label>
-                    <input type="text" id="pDesc" class="custom-input" style="padding-left: 10px;">
-                </div>
-                <div class="form-group">
-                    <label>Ürün Görseli</label>
-                    <input type="file" id="pImg" class="custom-input" style="padding-left: 10px;" accept="image/*">
-                </div>
-                <button class="btn-primary" id="btnSaveProduct" onclick="saveProduct()">
-                    <i class="fa-solid fa-plus"></i> Ürünü Kaydet
-                </button>
+                <button class="btn-primary" id="btnSaveProduct" onclick="saveProduct()"><i class="fa-solid fa-plus"></i> Kaydet</button>
             </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDofUXCUuZ8wh_HaC0ooN9IDnBv7ouGSRg",
@@ -681,328 +330,229 @@
         const ADMIN_PASS = "bok bulursun ben malmıyım kodun içerisine yazayım şifreyi";
 
         window.addEventListener('hashchange', checkHash);
-        window.addEventListener('load', () => {
-            checkHash();
-            initDataListeners();
-        });
+        window.addEventListener('load', () => { checkHash(); initDataListeners(); });
 
         function checkHash() {
             if (window.location.hash === "#admin") {
-                const pass = prompt("Admin Paneli Giriş Şifresi:");
-                if (pass === ADMIN_PASS) {
+                if (prompt("Admin Şifresi:") === ADMIN_PASS) {
                     document.getElementById('adminModal').classList.add('active');
-                } else {
-                    alert("Hatalı Şifre!");
-                    window.location.hash = "";
-                }
+                } else { alert("Hatalı!"); window.location.hash = ""; }
             }
         }
 
-        window.closeAdmin = () => {
-            document.getElementById('adminModal').classList.remove('active');
-            window.location.hash = "";
-        };
+        window.closeAdmin = () => { document.getElementById('adminModal').classList.remove('active'); window.location.hash = ""; };
 
         function initDataListeners() {
-            // Listen Site Logo
-            onValue(ref(db, 'settings/logoUrl'), (snapshot) => {
-                const logoUrl = snapshot.val();
-                const imgEl = document.getElementById('siteLogoImg');
-                const textEl = document.getElementById('siteLogoText');
-                if (logoUrl) {
-                    imgEl.src = logoUrl;
-                    imgEl.style.display = "block";
-                    textEl.style.display = "none";
-                } else {
-                    imgEl.style.display = "none";
-                    textEl.style.display = "flex";
-                }
-            });
-
-            // Listen Stores
             onValue(ref(db, 'stores'), (snapshot) => {
                 allStores = [];
                 const data = snapshot.val();
-                if (data) {
-                    Object.keys(data).forEach(key => {
-                        const storeName = typeof data[key] === 'object' ? data[key].name : data[key];
-                        if (storeName) allStores.push(storeName);
-                    });
-                }
+                if (data) Object.keys(data).forEach(k => { allStores.push(typeof data[k] === 'object' ? data[k].name : data[k]); });
                 updateStoreDropdowns();
             });
 
-            // Listen Products
             onValue(ref(db, 'products'), (snapshot) => {
                 allProducts = [];
                 const data = snapshot.val();
-                if (data) {
-                    Object.keys(data).forEach(key => {
-                        allProducts.push({ id: key, ...data[key] });
-                    });
-                }
+                if (data) Object.keys(data).forEach(k => allProducts.push({ id: k, ...data[k] }));
                 renderProducts(allProducts);
             });
         }
 
-        window.uploadSiteLogo = async () => {
-            const fileInput = document.getElementById('logoFileInput');
-            if (!fileInput.files[0]) return alert("Lütfen bir logo görseli seçin!");
-
-            const btn = document.getElementById('btnSaveLogo');
-            btn.disabled = true;
-            btn.innerText = "Yükleniyor...";
-
-            try {
-                const formData = new FormData();
-                formData.append("image", fileInput.files[0]);
-
-                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                    method: "POST",
-                    body: formData
-                });
-                const resData = await response.json();
-
-                if (resData.success) {
-                    // Medium/Display URL for fast loading
-                    const fastUrl = resData.data.display_url || resData.data.url;
-                    await set(ref(db, 'settings/logoUrl'), fastUrl);
-                    alert("Site logosu başarıyla güncellendi!");
-                    fileInput.value = "";
-                } else {
-                    alert("Resim yüklenemedi!");
-                }
-            } catch (err) {
-                console.error(err);
-                alert("Logo yüklenirken bir hata oluştu!");
-            } finally {
-                btn.disabled = false;
-                btn.innerText = "Logo Yükle";
-            }
-        };
-
-        window.removeSiteLogo = async () => {
-            await remove(ref(db, 'settings/logoUrl'));
-            alert("Logo varsayılana sıfırlandı.");
-        };
-
         window.addStore = () => {
             const name = document.getElementById('newStoreName').value.trim();
-            if (!name) return alert("Mağaza adı boş olamaz!");
+            if (!name) return alert("Boş bırakılamaz!");
             push(ref(db, 'stores'), { name });
             document.getElementById('newStoreName').value = "";
-            alert("Mağaza eklendi.");
         };
 
         function updateStoreDropdowns() {
-            const storeFilter = document.getElementById('storeFilter');
-            const adminSelect = document.getElementById('adminStoreSelect');
-
-            storeFilter.innerHTML = '<option value="ALL">Tüm Mağazalar</option>';
-            adminSelect.innerHTML = '<option value="">Mağaza Seçin</option>';
-
-            allStores.forEach(store => {
-                storeFilter.innerHTML += `<option value="${store}">${store}</option>`;
-                adminSelect.innerHTML += `<option value="${store}">${store}</option>`;
+            const sFilter = document.getElementById('storeFilter');
+            const aSelect = document.getElementById('adminStoreSelect');
+            sFilter.innerHTML = '<option value="ALL">Tüm Mağazalar</option>';
+            aSelect.innerHTML = '<option value="">Mağaza Seçin</option>';
+            allStores.forEach(s => {
+                sFilter.innerHTML += `<option value="${s}">${s}</option>`;
+                aSelect.innerHTML += `<option value="${s}">${s}</option>`;
             });
         }
 
-        function generate6DigitCode() {
-            return Math.floor(100000 + Math.random() * 900000).toString();
-        }
-
+        // Multiple Image Upload Handler
         window.saveProduct = async () => {
             const store = document.getElementById('adminStoreSelect').value;
             const title = document.getElementById('pName').value.trim();
             const price = parseFloat(document.getElementById('pPrice').value);
             const desc = document.getElementById('pDesc').value.trim();
-            const fileInput = document.getElementById('pImg');
+            const files = document.getElementById('pImg').files;
 
-            if (!store || !title || isNaN(price) || !fileInput.files[0]) {
-                return alert("Lütfen tüm alanları eksiksiz doldurun!");
-            }
+            if (!store || !title || isNaN(price) || files.length === 0) return alert("Eksik bilgi!");
 
             const btn = document.getElementById('btnSaveProduct');
-            btn.disabled = true;
-            btn.innerHTML = `<div class="spinner"></div> Yükleniyor...`;
+            btn.disabled = true; btn.innerHTML = `<div class="spinner"></div> Yükleniyor...`;
 
             try {
-                const formData = new FormData();
-                formData.append("image", fileInput.files[0]);
-
-                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                    method: "POST",
-                    body: formData
-                });
-                const resData = await response.json();
-
-                if (resData.success) {
-                    const code = generate6DigitCode();
-                    // Store display_url for ultra fast mobile rendering
-                    const fastImgUrl = resData.data.display_url || resData.data.url;
-
-                    await push(ref(db, 'products'), {
-                        code,
-                        store,
-                        title,
-                        price,
-                        desc,
-                        imgUrl: fastImgUrl,
-                        createdAt: Date.now()
-                    });
-
-                    alert("Ürün eklendi! Kod: #" + code);
-                    document.getElementById('pName').value = "";
-                    document.getElementById('pPrice').value = "";
-                    document.getElementById('pDesc').value = "";
-                    fileInput.value = "";
-                } else {
-                    alert("Görsel yüklenemedi!");
+                let imgUrls = [];
+                for (let file of files) {
+                    const formData = new FormData();
+                    formData.append("image", file);
+                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
+                    const resData = await res.json();
+                    if (resData.success) imgUrls.push(resData.data.display_url || resData.data.url);
                 }
-            } catch (err) {
-                console.error(err);
-                alert("Yükleme sırasında hata meydana geldi!");
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fa-solid fa-plus"></i> Ürünü Kaydet`;
-            }
+
+                const code = Math.floor(100000 + Math.random() * 900000).toString();
+                await push(ref(db, 'products'), {
+                    code, store, title, price, desc,
+                    imgUrls: imgUrls, // Store Array of Images
+                    createdAt: Date.now()
+                });
+
+                alert("Ürün eklendi! Kod: #" + code);
+                document.getElementById('pName').value = ""; document.getElementById('pPrice').value = "";
+                document.getElementById('pDesc').value = ""; document.getElementById('pImg').value = "";
+            } catch (err) { alert("Resim yükleme hatası!"); }
+            finally { btn.disabled = false; btn.innerHTML = `<i class="fa-solid fa-plus"></i> Kaydet`; }
         };
 
         function renderProducts(products) {
             const container = document.getElementById('productGrid');
             if (products.length === 0) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem; font-size: 0.85rem;">Henüz ürün bulunmuyor.</div>`;
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Ürün yok.</div>`;
                 return;
             }
 
-            container.innerHTML = products.map(p => `
-                <div class="product-card">
-                    <div class="card-img-wrapper">
-                        <span class="store-tag"><i class="fa-solid fa-shop"></i> ${p.store}</span>
-                        <span class="code-tag">#${p.code}</span>
-                        <img src="${p.imgUrl}" class="card-img" alt="${p.title}" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
-                    </div>
-                    <div class="card-body">
-                        <div class="product-title">${p.title}</div>
-                        <div class="product-desc">${p.desc || ''}</div>
-                        <div class="card-footer">
-                            <div class="product-price">${p.price.toFixed(2)} TL</div>
-                            <button class="btn-add-cart" onclick="addToCart('${p.id}')">
-                                <i class="fa-solid fa-cart-plus"></i> Ekle
-                            </button>
+            container.innerHTML = products.map(p => {
+                const coverImg = (p.imgUrls && p.imgUrls.length > 0) ? p.imgUrls[0] : (p.imgUrl || '');
+                return `
+                    <div class="product-card" onclick="openDetail('${p.id}')">
+                        <div class="card-img-wrapper">
+                            <span class="store-tag">${p.store}</span>
+                            <span class="code-tag">#${p.code}</span>
+                            <img src="${coverImg}" class="card-img" alt="${p.title}" loading="lazy">
+                        </div>
+                        <div class="card-body">
+                            <div class="product-title">${p.title}</div>
+                            <div class="product-desc">${p.desc || ''}</div>
+                            <div class="card-footer">
+                                <div class="product-price">${p.price.toFixed(2)} TL</div>
+                                <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart('${p.id}')">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
+        // Product Detail View (Trendyol Style)
+        window.openDetail = (id) => {
+            const p = allProducts.find(item => item.id === id);
+            if (!p) return;
+
+            const images = p.imgUrls || [p.imgUrl];
+            document.getElementById('detailStore').innerText = p.store;
+            document.getElementById('detailTitle').innerText = p.title;
+            document.getElementById('detailCode').innerText = "Ürün Kodu: #" + p.code;
+            document.getElementById('detailPrice').innerText = p.price.toFixed(2) + " TL";
+            document.getElementById('detailDesc').innerText = p.desc || 'Açıklama bulunmuyor.';
+            
+            const mainImg = document.getElementById('mainDetailImg');
+            mainImg.src = images[0];
+
+            const thumbsContainer = document.getElementById('thumbsContainer');
+            thumbsContainer.innerHTML = images.map((img, idx) => `
+                <img src="${img}" class="thumb-img ${idx === 0 ? 'active' : ''}" onclick="setMainImage('${img}', this)">
+            `).join('');
+
+            document.getElementById('btnDetailCartAdd').onclick = () => { addToCart(p.id); closeDetail(); };
+            document.getElementById('detailModal').classList.add('active');
+        };
+
+        window.setMainImage = (url, el) => {
+            document.getElementById('mainDetailImg').src = url;
+            document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+        };
+
+        window.closeDetail = () => { document.getElementById('detailModal').classList.remove('active'); };
+
         window.filterProducts = () => {
-            const query = document.getElementById('searchInput').value.toLowerCase().trim();
-            const store = document.getElementById('storeFilter').value;
-
-            const filtered = allProducts.filter(p => {
-                const matchesSearch = p.title.toLowerCase().includes(query) || p.code.includes(query);
-                const matchesStore = (store === 'ALL') || (p.store === store);
-                return matchesSearch && matchesStore;
-            });
-
+            const q = document.getElementById('searchInput').value.toLowerCase().trim();
+            const s = document.getElementById('storeFilter').value;
+            const filtered = allProducts.filter(p => (p.title.toLowerCase().includes(q) || p.code.includes(q)) && (s === 'ALL' || p.store === s));
             renderProducts(filtered);
         };
 
         window.addToCart = (id) => {
             const product = allProducts.find(p => p.id === id);
             if (!product) return;
-
             const existing = cart.find(item => item.id === id);
-            if (existing) {
-                existing.qty += 1;
-            } else {
-                cart.push({ ...product, qty: 1 });
-            }
-
+            if (existing) existing.qty += 1;
+            else cart.push({ ...product, qty: 1 });
             updateCartUI();
             toggleCart(true);
         };
 
         window.updateQty = (id, change) => {
-            const index = cart.findIndex(item => item.id === id);
-            if (index > -1) {
-                cart[index].qty += change;
-                if (cart[index].qty <= 0) cart.splice(index, 1);
+            const idx = cart.findIndex(i => i.id === id);
+            if (idx > -1) {
+                cart[idx].qty += change;
+                if (cart[idx].qty <= 0) cart.splice(idx, 1);
             }
             updateCartUI();
         };
 
         function updateCartUI() {
             document.getElementById('cartBadge').innerText = cart.reduce((a, b) => a + b.qty, 0);
-
             const container = document.getElementById('cartItemsContainer');
             if (cart.length === 0) {
-                container.innerHTML = `<div style="text-align: center; color: var(--text-muted); margin-top: 2rem; font-size: 0.85rem;">Sepetiniz boş.</div>`;
+                container.innerHTML = `<div style="text-align:center; color:var(--text-muted); margin-top:2rem;">Sepetiniz boş.</div>`;
                 document.getElementById('cartTotal').innerText = "0.00 TL";
                 return;
             }
 
-            let totalPrice = 0;
+            let total = 0;
             container.innerHTML = cart.map(item => {
                 const itemTotal = item.price * item.qty;
-                totalPrice += itemTotal;
+                total += itemTotal;
+                const img = (item.imgUrls && item.imgUrls.length > 0) ? item.imgUrls[0] : item.imgUrl;
                 return `
                     <div class="cart-item">
-                        <img src="${item.imgUrl}" alt="${item.title}" loading="lazy">
+                        <img src="${img}">
                         <div class="cart-item-details">
-                            <div class="cart-item-title">${item.title}</div>
-                            <div class="cart-item-code">${item.store} | Kod: #${item.code}</div>
-                            <div class="cart-item-price">${itemTotal.toFixed(2)} TL</div>
+                            <div style="font-weight:600; font-size:0.82rem;">${item.title}</div>
+                            <div style="font-size:0.7rem; color:var(--success); font-weight:700;">${itemTotal.toFixed(2)} TL</div>
                         </div>
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="updateQty('${item.id}', -1)">-</button>
-                            <span style="font-size: 0.8rem; font-weight:700;">${item.qty}</span>
+                            <span style="font-size:0.8rem; font-weight:700;">${item.qty}</span>
                             <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
                         </div>
                     </div>
                 `;
             }).join('');
-
-            document.getElementById('cartTotal').innerText = totalPrice.toFixed(2) + " TL";
+            document.getElementById('cartTotal').innerText = total.toFixed(2) + " TL";
         }
 
         window.toggleCart = (show) => {
-            const modal = document.getElementById('cartModal');
-            const overlay = document.getElementById('cartOverlay');
-            if (show) {
-                modal.classList.add('active');
-                overlay.classList.add('active');
-            } else {
-                modal.classList.remove('active');
-                overlay.classList.remove('active');
-            }
+            document.getElementById('cartModal').classList.toggle('active', show);
+            document.getElementById('cartOverlay').classList.toggle('active', show);
         };
 
         window.checkoutWhatsApp = () => {
-            if (cart.length === 0) return alert("Sepetinizde ürün yok!");
-
+            if (cart.length === 0) return alert("Sepet boş!");
             const name = document.getElementById('custName').value.trim();
             const address = document.getElementById('custAddress').value.trim();
+            if (!name || !address) return alert("Lütfen ad, soyad ve adres giriniz!");
 
-            if (!name || !address) {
-                return alert("Lütfen ad, soyad ve teslimat adresinizi girin!");
-            }
-
-            let text = `🛍️ *DEVA CENTRE SİPARİŞ BİLDİRİMİ*\n\n`;
-            text += `👤 *Müşteri:* ${name}\n`;
-            text += `📍 *Adres:* ${address}\n\n`;
-            text += `📦 *Sipariş Detayı:*\n`;
-
+            let text = `🛍️ *DEVA CENTRE SİPARİŞ BİLDİRİMİ*\n\n👤 *Müşteri:* ${name}\n📍 *Adres:* ${address}\n\n📦 *Sipariş Detayı:*\n`;
             let grandTotal = 0;
             cart.forEach((item, i) => {
                 const total = item.price * item.qty;
                 grandTotal += total;
                 text += `${i + 1}. [${item.store}] ${item.title} (Kod: #${item.code})\n   👉 ${item.qty} Adet x ${item.price.toFixed(2)} TL = ${total.toFixed(2)} TL\n`;
             });
-
             text += `\n💰 *Genel Toplam:* ${grandTotal.toFixed(2)} TL`;
-
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
         };
     </script>
