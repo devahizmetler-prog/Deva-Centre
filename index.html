@@ -192,7 +192,7 @@
         /* Admin Modal */
         .admin-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); z-index: 300; display: none; overflow-y: auto; padding: 1rem; }
         .admin-modal.active { display: block; }
-        .admin-container { max-width: 600px; margin: 0 auto; background: var(--bg-card); padding: 1.2rem; border-radius: var(--radius); }
+        .admin-container { max-width: 600px; margin: 0 auto; background: var(--bg-card); padding: 1.2rem; border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.1); }
         .form-group { margin-bottom: 0.8rem; }
         .form-group label { display: block; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px; }
         .btn-primary { width: 100%; background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
@@ -208,7 +208,7 @@
     <header>
         <div class="logo-container">
             <img id="siteLogoImg" class="site-logo-img" src="" alt="" style="display: none;">
-            <div class="logo-text" id="siteLogoText"><i class="fa-solid fa-store"></i> DEVA CENTRE</div>
+            <div class="logo-text" id="siteLogoText"><i class="fa-solid fa-store"></i> <span id="siteTitleText">DEVA CENTRE</span></div>
         </div>
         <button class="cart-icon-btn" onclick="toggleCart(true)">
             <i class="fa-solid fa-cart-shopping"></i>
@@ -276,15 +276,35 @@
 
     <div class="admin-modal" id="adminModal">
         <div class="admin-container">
-            <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
-                <h3>Admin Paneli</h3><i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="closeAdmin()"></i>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                <h3><i class="fa-solid fa-user-shield" style="color:var(--secondary);"></i> Admin Paneli</h3>
+                <i class="fa-solid fa-xmark" style="cursor:pointer; font-size:1.2rem;" onclick="closeAdmin()"></i>
+            </div>
+
+            <div style="background: var(--bg-dark); padding: 0.9rem; border-radius: 12px; margin-bottom: 1rem;">
+                <h4 style="font-size:0.85rem; margin-bottom:6px;">Site İsmini Değiştir</h4>
+                <div style="display:flex; gap:8px;">
+                    <input type="text" id="siteNameInput" class="custom-input" style="padding-left:10px;" placeholder="Örn: DEVA CENTRE">
+                    <button class="btn-primary" style="width:auto; padding: 0 15px;" onclick="saveSiteName()">Kaydet</button>
+                </div>
+            </div>
+
+            <div style="background: var(--bg-dark); padding: 0.9rem; border-radius: 12px; margin-bottom: 1rem;">
+                <h4 style="font-size:0.85rem; margin-bottom:6px;">Site Logosu Yükle</h4>
+                <div class="form-group" style="margin-bottom: 8px;">
+                    <input type="file" id="logoFileInput" class="custom-input" style="padding-left:10px;" accept="image/*">
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn-primary" id="btnSaveLogo" onclick="uploadSiteLogo()" style="padding: 8px;">Logo Yükle</button>
+                    <button class="btn-primary" onclick="removeSiteLogo()" style="background: var(--danger); padding: 8px;">Logoyu Sil</button>
+                </div>
             </div>
 
             <div style="background: var(--bg-dark); padding: 0.9rem; border-radius: 12px; margin-bottom: 1rem;">
                 <h4 style="font-size:0.85rem; margin-bottom:6px;">Mağaza Ekle</h4>
                 <div style="display:flex; gap:8px;">
                     <input type="text" id="newStoreName" class="custom-input" style="padding-left:10px;" placeholder="Mağaza Adı">
-                    <button class="btn-primary" style="width:auto;" onclick="addStore()">Ekle</button>
+                    <button class="btn-primary" style="width:auto; padding: 0 15px;" onclick="addStore()">Ekle</button>
                 </div>
             </div>
 
@@ -298,14 +318,14 @@
                     <label>Ürün Görselleri (Birden fazla seçebilirsiniz)</label>
                     <input type="file" id="pImg" class="custom-input" style="padding-left:10px;" accept="image/*" multiple>
                 </div>
-                <button class="btn-primary" id="btnSaveProduct" onclick="saveProduct()"><i class="fa-solid fa-plus"></i> Kaydet</button>
+                <button class="btn-primary" id="btnSaveProduct" onclick="saveProduct()"><i class="fa-solid fa-plus"></i> Ürünü Kaydet</button>
             </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDofUXCUuZ8wh_HaC0ooN9IDnBv7ouGSRg",
@@ -327,7 +347,7 @@
         let allStores = [];
         let cart = [];
 
-        const ADMIN_PASS = "bok bulursun ben malmıyım kodun içerisine yazayım şifreyi";
+        const ADMIN_PASS = "???";
 
         window.addEventListener('hashchange', checkHash);
         window.addEventListener('load', () => { checkHash(); initDataListeners(); });
@@ -343,6 +363,28 @@
         window.closeAdmin = () => { document.getElementById('adminModal').classList.remove('active'); window.location.hash = ""; };
 
         function initDataListeners() {
+            // Site Logo
+            onValue(ref(db, 'settings/logoUrl'), (snapshot) => {
+                const logoUrl = snapshot.val();
+                const imgEl = document.getElementById('siteLogoImg');
+                if (logoUrl) {
+                    imgEl.src = logoUrl;
+                    imgEl.style.display = "block";
+                } else {
+                    imgEl.style.display = "none";
+                }
+            });
+
+            // Site Title
+            onValue(ref(db, 'settings/siteName'), (snapshot) => {
+                const name = snapshot.val();
+                if (name) {
+                    document.getElementById('siteTitleText').innerText = name;
+                    document.title = name + " - Dijital Pazaryeri";
+                }
+            });
+
+            // Stores
             onValue(ref(db, 'stores'), (snapshot) => {
                 allStores = [];
                 const data = snapshot.val();
@@ -350,6 +392,7 @@
                 updateStoreDropdowns();
             });
 
+            // Products
             onValue(ref(db, 'products'), (snapshot) => {
                 allProducts = [];
                 const data = snapshot.val();
@@ -357,6 +400,43 @@
                 renderProducts(allProducts);
             });
         }
+
+        window.saveSiteName = async () => {
+            const name = document.getElementById('siteNameInput').value.trim();
+            if(!name) return alert("İsim boş olamaz!");
+            await set(ref(db, 'settings/siteName'), name);
+            alert("Site ismi güncellendi.");
+            document.getElementById('siteNameInput').value = "";
+        };
+
+        window.uploadSiteLogo = async () => {
+            const fileInput = document.getElementById('logoFileInput');
+            if (!fileInput.files[0]) return alert("Bir logo görseli seçin!");
+
+            const btn = document.getElementById('btnSaveLogo');
+            btn.disabled = true; btn.innerText = "Yükleniyor...";
+
+            try {
+                const formData = new FormData();
+                formData.append("image", fileInput.files[0]);
+
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
+                const resData = await response.json();
+
+                if (resData.success) {
+                    const fastUrl = resData.data.display_url || resData.data.url;
+                    await set(ref(db, 'settings/logoUrl'), fastUrl);
+                    alert("Site logosu başarıyla yüklendi!");
+                    fileInput.value = "";
+                } else { alert("Yüklenemedi!"); }
+            } catch (err) { alert("Logo yükleme hatası!"); }
+            finally { btn.disabled = false; btn.innerText = "Logo Yükle"; }
+        };
+
+        window.removeSiteLogo = async () => {
+            await remove(ref(db, 'settings/logoUrl'));
+            alert("Logo silindi.");
+        };
 
         window.addStore = () => {
             const name = document.getElementById('newStoreName').value.trim();
@@ -376,7 +456,6 @@
             });
         }
 
-        // Multiple Image Upload Handler
         window.saveProduct = async () => {
             const store = document.getElementById('adminStoreSelect').value;
             const title = document.getElementById('pName').value.trim();
@@ -402,7 +481,7 @@
                 const code = Math.floor(100000 + Math.random() * 900000).toString();
                 await push(ref(db, 'products'), {
                     code, store, title, price, desc,
-                    imgUrls: imgUrls, // Store Array of Images
+                    imgUrls: imgUrls,
                     createdAt: Date.now()
                 });
 
@@ -416,7 +495,7 @@
         function renderProducts(products) {
             const container = document.getElementById('productGrid');
             if (products.length === 0) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Ürün yok.</div>`;
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Ürün bulunamadı.</div>`;
                 return;
             }
 
@@ -444,7 +523,6 @@
             }).join('');
         }
 
-        // Product Detail View (Trendyol Style)
         window.openDetail = (id) => {
             const p = allProducts.find(item => item.id === id);
             if (!p) return;
@@ -545,7 +623,7 @@
             const address = document.getElementById('custAddress').value.trim();
             if (!name || !address) return alert("Lütfen ad, soyad ve adres giriniz!");
 
-            let text = `🛍️ *DEVA CENTRE SİPARİŞ BİLDİRİMİ*\n\n👤 *Müşteri:* ${name}\n📍 *Adres:* ${address}\n\n📦 *Sipariş Detayı:*\n`;
+            let text = `🛍️ *SİPARİŞ BİLDİRİMİ*\n\n👤 *Müşteri:* ${name}\n📍 *Adres:* ${address}\n\n📦 *Sipariş Detayı:*\n`;
             let grandTotal = 0;
             cart.forEach((item, i) => {
                 const total = item.price * item.qty;
